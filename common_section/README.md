@@ -1,0 +1,3 @@
+# Common Section in Binary File
+
+In the context of ELF binary file, the uninitialized global variables with the same name but in separate source files might be consolidated into the same memory location for some compiler and platform. However, after conducting a test, the compiler ended up with a multiple definition error. It seems like modern compiler conforms a stricter rule to avoid the ambiguity.
