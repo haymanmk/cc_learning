@@ -1,0 +1,3 @@
+[submodule "iterable_sections"]
+	path = iterable_sections
+	url = https://github.com/haymanmk/iterable_sections.git
