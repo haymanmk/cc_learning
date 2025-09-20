@@ -1,0 +1,2 @@
+# Link Relocatable Objects into Executable
+This learning demonstrates how to link all the relocatable files/modules together to build an executable. Linking provides a way for modules to reference each other without needing the help of header files, which is also known as **ABI** (**A**pplication **B**inary **I**nterface).

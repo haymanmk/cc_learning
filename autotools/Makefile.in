@@ -1,0 +1,29 @@
+# @configure_input@
+
+.PHONY: all clean
+
+BUILD_DIR = @prefix@
+SRC_DIR = @srcdir@
+
+# create build directory if it doesn't exist
+$(shell mkdir -p $(BUILD_DIR))
+
+# create a list of object files by substituting .cc with .o
+SRC_FILES = $(wildcard $(SRC_DIR)/*.cc)
+OBJ_FILES = $(patsubst $(SRC_DIR)/%.cc,$(BUILD_DIR)/%.o,$(SRC_FILES))
+
+all: $(OBJ_FILES) Makefile config.status
+	$(CXX) -o $(BUILD_DIR)/main $(OBJ_FILES)
+	@echo "Build complete. Executable is at $(BUILD_DIR)/main"
+
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cc
+	$(CXX) -c $< -o $@
+
+clean:
+	rm -rf $(BUILD_DIR)
+
+Makefile: Makefile.in config.status
+	./config.status $@
+
+config.status: ./configure
+	./config.status --recheck
