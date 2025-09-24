@@ -1,7 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
 #include <unistd.h>
 #include <sys/types.h>
-#include <stdlib.h>
+#include <sys/wait.h>
 
 #define NUM_GREETINGS (uint8_t)30
 
@@ -36,6 +38,18 @@ int main() {
         default:
             // Parent process
             greeting("Parent", 1);
+
+            // wait for child process to finish
+            int status;
+            if (waitpid(pid, &status, 0)) {
+                if (WIFEXITED(status)) {
+                    printf("Child process exited with status %d\n", WEXITSTATUS(status));
+                } else {
+                    printf("Child process did not terminate normally\n");
+                }
+            } else {
+                perror("waitpid failed");
+            }
             // pause here to allow time to use `ps` command to see the process tree
             printf("Press ENTER to exit...\n");
             getchar();
@@ -43,5 +57,5 @@ int main() {
             break;
     }
 
-    return 0;
+    exit(EXIT_SUCCESS);
 }
