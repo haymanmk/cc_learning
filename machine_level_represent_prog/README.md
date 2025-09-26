@@ -1,0 +1,2 @@
+# Machine Level Representation of Programs
+This project is inspired by [Computer Systems: A Programmer's Perspective](https://csapp.cs.cmu.edu/), which is a manner for a learner to understand how a program manipulates memories under the hood.
