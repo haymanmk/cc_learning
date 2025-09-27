@@ -34,6 +34,7 @@ int main() {
         case 0:
             // Child process
             greeting("Child", 0);
+            _exit(EXIT_SUCCESS);
             break;
         default:
             // Parent process
