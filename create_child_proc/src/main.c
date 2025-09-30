@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <errno.h>
+#include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 
 #define NUM_GREETINGS (uint8_t)30
+#define CHILD_PROC_EXEC "./greeting"
 
 void greeting(char *name, uint8_t times) {
     if (times == 0) times = NUM_GREETINGS;
@@ -33,7 +36,13 @@ int main() {
             return 1;
         case 0:
             // Child process
-            greeting("Child", 0);
+            char *const args[] = {CHILD_PROC_EXEC, "Child", "5", NULL};
+            int retval = execve(CHILD_PROC_EXEC, args, NULL);
+            if (retval == -1) {
+                // stringify errno
+                fprintf(stderr, "execve failed: %s\n", strerror(errno));
+                _exit(EXIT_FAILURE);
+            }
             _exit(EXIT_SUCCESS);
             break;
         default:
